@@ -60,6 +60,53 @@ is_topmost = _backend.is_topmost
 find_window = _backend.find_window
 
 
+def _bind(backend) -> None:
+    """Backend fonksiyonlarini modul seviyesine baglar."""
+    global _backend, NAME
+    global virtual_screen_rect, list_windows, z_order_index
+    global set_topmost, is_topmost, find_window
+
+    _backend = backend
+    NAME = getattr(backend, "NAME", "unknown")
+    virtual_screen_rect = backend.virtual_screen_rect
+    list_windows = backend.list_windows
+    z_order_index = backend.z_order_index
+    set_topmost = backend.set_topmost
+    is_topmost = backend.is_topmost
+    find_window = backend.find_window
+
+
+def refresh() -> str:
+    """QApplication olustuktan sonra gercek Qt platformuna gore backend secer.
+
+    Ozellikle Wayland + XWayland karisikligini onler: Qt Wayland ile calisiyorsa
+    winId() bir X11 kimligi degildir, bu yuzden X11 katmani kullanilmamalidir.
+    """
+    name = ""
+    try:
+        from PySide6.QtGui import QGuiApplication
+
+        name = QGuiApplication.platformName().lower()
+    except Exception:
+        return NAME
+
+    if not name:
+        return NAME
+    if name == "xcb" and sys.platform.startswith("linux"):
+        try:
+            from . import x11
+
+            if x11.available():
+                _bind(x11)
+        except Exception:
+            pass
+    elif name not in ("windows", "cocoa"):
+        from . import fallback
+
+        _bind(fallback)
+    return NAME
+
+
 def open_folder(path: str) -> None:
     """Ayar klasorunu isletim sisteminin dosya yoneticisinde acar."""
     if sys.platform == "win32":

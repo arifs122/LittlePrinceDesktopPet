@@ -47,6 +47,7 @@ def _selftest() -> int:
         from littleprince import prince  # noqa: F401
         from littleprince import platforms  # noqa: F401
 
+        platforms.refresh()
         add("Moduller: OK")
         add(f"Platform: {platforms.NAME}")
         add(f"Ayar dosyasi: {config.path()}")

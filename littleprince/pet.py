@@ -140,6 +140,8 @@ class PetWindow(QWidget):
         self.setAttribute(Qt.WA_ShowWithoutActivating)
         self.setWindowTitle("Küçük Prens")
 
+        platform_api.refresh()
+
         self.cfg = config.load()
         self.save_ok = True
         self.tr = i18n.get(self.cfg.get("language", "auto"))
