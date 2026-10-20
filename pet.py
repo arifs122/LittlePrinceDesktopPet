@@ -9,7 +9,6 @@ from PySide6.QtCore import QPoint, QPointF, QRectF, Qt, QTimer
 from PySide6.QtGui import (
     QAction,
     QColor,
-    QFont,
     QFontMetrics,
     QGuiApplication,
     QPainter,

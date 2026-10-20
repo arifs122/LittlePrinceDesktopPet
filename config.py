@@ -1,9 +1,9 @@
 """Ayarlarin okunmasi / kaydedilmesi.
 
 Ayar dosyasinin yeri:
-  1) exe (veya kaynak) klasorunde `ayarlar.json` VARSA  -> orasi kullanilir
+  1) exe (veya kaynak) klasorunde `settings.json` VARSA  -> orasi kullanilir
      (tasinabilir / portable mod: dosyayi exe'nin yanina koymak yeterli)
-  2) yoksa -> %APPDATA%\\KucukPrens\\ayarlar.json
+  2) yoksa -> %APPDATA%\\LittlePrince\\settings.json
 
 Boylece exe'yi baska bir klasore/masaustune tasisaniz, guncelleseniz ya da
 exe klasoru salt-okunur olsa bile ayarlariniz kaybolmaz.

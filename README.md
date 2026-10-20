@@ -158,10 +158,11 @@ CPU, so it works on any machine — no GPU required.
 ```powershell
 python -m pip install -r requirements-dev.txt
 python tools\make_icon.py      # generates app.ico
-build_all.bat                  # -> dist\LittlePrince.exe + dist\LittlePrinceAI.exe
+build.bat                      # -> dist\LittlePrince.exe + dist\LittlePrinceAI.exe
 ```
 
-Or just one edition: `build_noai.bat` / `build_ai.bat`.
+Or just one edition: `build.bat classic` / `build.bat ai`
+(equivalently `python build.py classic` / `python build.py ai`).
 
 Smoke test without opening the UI:
 
@@ -191,9 +192,8 @@ chat.py                 chat window + model downloader
 config.py               settings load/save
 settings_dialog.py      settings UI
 win32_windows.py        Win32 helpers (window rects, z-order, topmost)
-build_noai.bat          builds the classic edition
-build_ai.bat            builds the AI edition
-build_all.bat           builds both
+build.bat               builds both editions (classic / ai for a single one)
+build.py                PyInstaller command builder used by build.bat
 LICENSE                 MIT for the code (story/character rights excluded)
 tools/                  art previews, icon generator, diagnostics, tests
 ```

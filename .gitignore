@@ -6,6 +6,9 @@ __pycache__/
 *$py.class
 *.egg-info/
 .eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
 # Sanal ortamlar
 .venv/
@@ -18,6 +21,7 @@ ENV/
 # ---------------------------------------------------------------------------
 settings.json
 ayarlar.json
+*.tmp
 *.log
 
 # ---------------------------------------------------------------------------
@@ -26,6 +30,7 @@ ayarlar.json
 build/
 dist/
 *.spec
+*.exe
 
 # ---------------------------------------------------------------------------
 # Yerlesik yapay zeka modelleri (yuzlerce MB - repoya girmemeli)

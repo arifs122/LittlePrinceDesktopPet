@@ -4,7 +4,7 @@ Calistirmak icin:  python main.py
 Cikis icin: karaktere sag tiklayip "Cikis".
 
 Ozel: LP_SELFTEST=1 ortam degiskeni ile baslatilirsa arayuzu acmaz,
-kendini test eder ve sonucu %TEMP%\lp_selftest.txt dosyasina yazar.
+kendini test eder ve sonucu %TEMP%\\lp_selftest.txt dosyasina yazar.
 """
 from __future__ import annotations
 
