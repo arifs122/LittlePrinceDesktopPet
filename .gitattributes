@@ -1,0 +1,12 @@
+# Satir sonlari: Windows betikleri CRLF kalsin
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Ikili dosyalar
+*.png binary
+*.ico binary
+*.exe binary

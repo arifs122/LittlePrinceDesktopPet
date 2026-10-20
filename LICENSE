@@ -1,0 +1,48 @@
+MIT License
+
+Copyright (c) 2026 LittlePrince contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+===============================================================================
+SCOPE OF THIS LICENSE — PLEASE READ
+===============================================================================
+
+This MIT license covers ONLY the source code in this repository (the Python
+files, the batch scripts and the build tooling).
+
+It does NOT cover, and grants no rights to:
+
+  * "The Little Prince" / "Le Petit Prince", its story, its characters and
+    their names;
+  * the quotations from the book contained in i18n.py, in any language;
+  * any published translation of the book.
+
+All rights to those belong to the estate of Antoine de Saint-Exupéry, the
+publishers and the translators. They appear in this project solely as a
+non-commercial fan tribute, and will be removed on request from a rights
+holder.
+
+The character drawings in prince.py and companion.py are original
+interpretations drawn with vector code for this fan project; they are not
+copies of any published illustration.
+
+If you fork or redistribute this project, keep this notice intact and do not
+present it as an official product.

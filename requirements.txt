@@ -1,0 +1,8 @@
+# Windows'ta llama.cpp icin hazir tekerlek (derleme gerektirmez)
+--extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
+
+# Arayuz
+PySide6>=6.6
+
+# Yerlesik kucuk yapay zeka (exe'nin icindeki model motoru)
+llama-cpp-python>=0.3.0

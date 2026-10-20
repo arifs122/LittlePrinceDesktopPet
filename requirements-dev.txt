@@ -1,0 +1,3 @@
+# Gelistirme / .exe derleme icin ek paketler
+-r requirements.txt
+pyinstaller>=6.0

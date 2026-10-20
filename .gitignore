@@ -1,0 +1,53 @@
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+
+# Sanal ortamlar
+.venv/
+venv/
+env/
+ENV/
+
+# ---------------------------------------------------------------------------
+# Kisisel ayarlar  (API ANAHTARI ICEREBILIR - asla commit etmeyin!)
+# ---------------------------------------------------------------------------
+settings.json
+ayarlar.json
+*.log
+
+# ---------------------------------------------------------------------------
+# PyInstaller / derleme ciktilari
+# ---------------------------------------------------------------------------
+build/
+dist/
+*.spec
+
+# ---------------------------------------------------------------------------
+# Yerlesik yapay zeka modelleri (yuzlerce MB - repoya girmemeli)
+# ---------------------------------------------------------------------------
+models/
+*.gguf
+*.part
+
+# ---------------------------------------------------------------------------
+# Ekran goruntuleri ve test ciktilari (kisisel masaustu goruntusu icerebilir)
+# NOT: tools/preview*.png belgelerde kullanildigi icin DAHIL EDILIR.
+# ---------------------------------------------------------------------------
+tools/screenshot.png
+tools/shot_*.png
+tools/icon_preview.png
+
+# ---------------------------------------------------------------------------
+# Isletim sistemi / editor
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
