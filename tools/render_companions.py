@@ -8,7 +8,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QFont, QPainter, QPen, QPixmap
 from PySide6.QtWidgets import QApplication
 
-import companion
+from littleprince import companion
 
 SCALE = 2.0
 PAD = 8
@@ -62,7 +62,11 @@ def main():
         y += LABEL
 
     p.end()
-    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "preview_companions.png")
+    out = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        "docs",
+        "preview_companions.png",
+    )
     sheet.save(out)
     print("Kaydedildi:", out)
     return 0

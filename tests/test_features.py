@@ -8,7 +8,7 @@ from PySide6.QtCore import QTimer
 from PySide6.QtGui import QColor, QPainter
 from PySide6.QtWidgets import QApplication, QWidget
 
-import pet as pet_mod
+from littleprince import pet as pet_mod
 
 
 class Box(QWidget):

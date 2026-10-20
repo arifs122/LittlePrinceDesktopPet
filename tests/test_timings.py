@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from PySide6.QtWidgets import QApplication
 
-import pet as pet_mod
+from littleprince import pet as pet_mod
 
 
 def main():
@@ -70,7 +70,7 @@ def main():
 
     # --- ayarlar kaydediliyor mu ---
     p.apply_settings({"teleport_cooldown": 33, "sit_min_seconds": 12})
-    import config
+    from littleprince import config
     reloaded = config.load()
     print(
         f"  kaydedilen: cooldown={reloaded['teleport_cooldown']} "

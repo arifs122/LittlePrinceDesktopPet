@@ -1,4 +1,8 @@
-"""Kucuk Prens karakterinden app.ico uretir (exe simgesi icin)."""
+"""Kucuk Prens karakterinden uygulama simgelerini uretir.
+
+  assets/app.ico  -> Windows exe simgesi
+  assets/app.png  -> Linux masaustu kisayolu / belgeler
+"""
 import os
 import struct
 import sys
@@ -8,10 +12,12 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication
 
-import prince
+from littleprince import prince
 
 SIZES = [16, 32, 48, 64, 128, 256]
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "app.ico")
+ASSETS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "assets")
+OUT = os.path.join(ASSETS, "app.ico")
+PNG_OUT = os.path.join(ASSETS, "app.png")
 
 
 def render_png(size: int) -> bytes:
@@ -56,7 +62,13 @@ def main():
     out = os.path.abspath(OUT)
     with open(out, "wb") as f:
         f.write(header + entries + blob)
+
+    os.makedirs(ASSETS, exist_ok=True)
+    with open(os.path.abspath(PNG_OUT), "wb") as f:
+        f.write(render_png(256))
+
     print("Kaydedildi:", out, os.path.getsize(out), "bayt")
+    print("Kaydedildi:", os.path.abspath(PNG_OUT), os.path.getsize(PNG_OUT), "bayt")
     return 0
 
 

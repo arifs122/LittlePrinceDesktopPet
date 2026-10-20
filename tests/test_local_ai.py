@@ -8,8 +8,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QApplication
 
-import llm
-import pet as pet_mod
+from littleprince import llm
+from littleprince import pet as pet_mod
 
 T0 = time.time()
 

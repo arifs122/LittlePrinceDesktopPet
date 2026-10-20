@@ -7,8 +7,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QApplication
 
-import companion
-import pet as pet_mod
+from littleprince import companion
+from littleprince import pet as pet_mod
 
 
 def main():

@@ -5,7 +5,6 @@ The AI tab only exists in builds that include it (see features.ai_enabled()).
 from __future__ import annotations
 
 import os
-import subprocess
 
 from PySide6.QtCore import Qt, QThread, Signal
 from PySide6.QtGui import QGuiApplication
@@ -27,9 +26,10 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-import config
-import features
-import i18n
+from . import config
+from . import features
+from . import i18n
+from . import platforms as platform_api
 
 
 class TestWorker(QThread):
@@ -43,7 +43,7 @@ class TestWorker(QThread):
 
     def run(self):
         try:
-            import llm
+            from . import llm
 
             provider, desc = llm.detect(self.cfg)
             ok = provider != "off"
@@ -195,7 +195,7 @@ class SettingsDialog(QDialog):
 
     # ------------------------------------------------------------------
     def _build_ai_tab(self, cfg: dict) -> QWidget:
-        import llm
+        from . import llm
 
         page = QWidget()
 
@@ -334,7 +334,7 @@ class SettingsDialog(QDialog):
     def _update_local_status(self):
         if not hasattr(self, "local_status"):
             return
-        import llm
+        from . import llm
 
         key = self.local_model.currentData()
         info = llm.LOCAL_MODELS.get(key, {})
@@ -354,7 +354,7 @@ class SettingsDialog(QDialog):
 
     def _download_local(self):
         self._changed()
-        from chat import DownloadWorker
+        from .chat import DownloadWorker
 
         self.dl_btn.setEnabled(False)
         self.local_status.setText("Downloading…")
@@ -420,7 +420,7 @@ class SettingsDialog(QDialog):
 
     def _open_folder(self):
         try:
-            subprocess.Popen(["explorer", os.path.dirname(config.path())])
+            platform_api.open_folder(os.path.dirname(config.path()))
         except Exception as exc:
             QMessageBox.warning(self, "Cannot open", str(exc))
 

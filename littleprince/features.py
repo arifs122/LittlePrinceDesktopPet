@@ -1,10 +1,10 @@
 """Derleme ozellikleri.
 
-Iki ayri exe uretiliyor:
-  LittlePrince.exe    -> yapay zeka YOK (kucuk, hizli, ai'siz)
-  LittlePrinceAI.exe  -> yerlesik model + Ollama + API destegi
+Iki ayri surum uretiliyor:
+  LittlePrince(.exe)    -> yapay zeka YOK (kucuk, hizli, ai'siz)
+  LittlePrinceAI(.exe)  -> yerlesik model + Ollama + API destegi
 
-AI destegi, paketleme sirasinda exe'nin icine konan `ai_enabled.flag`
+AI destegi, paketleme sirasinda binary'nin icine konan `ai_enabled.flag`
 dosyasinin varligina bakilarak belirlenir. Kaynaktan calisirken varsayilan
 olarak aciktir (LP_NO_AI=1 ile kapatilabilir).
 """

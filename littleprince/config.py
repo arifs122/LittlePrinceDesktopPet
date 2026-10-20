@@ -3,7 +3,9 @@
 Ayar dosyasinin yeri:
   1) exe (veya kaynak) klasorunde `settings.json` VARSA  -> orasi kullanilir
      (tasinabilir / portable mod: dosyayi exe'nin yanina koymak yeterli)
-  2) yoksa -> %APPDATA%\\LittlePrince\\settings.json
+  2) yoksa -> Windows: %APPDATA%\\LittlePrince\\settings.json
+              Linux  : ~/.config/LittlePrince/settings.json
+              macOS  : ~/Library/Application Support/LittlePrince/settings.json
 
 Boylece exe'yi baska bir klasore/masaustune tasisaniz, guncelleseniz ya da
 exe klasoru salt-okunur olsa bile ayarlariniz kaybolmaz.
@@ -39,15 +41,41 @@ DEFAULTS = {
 
 
 def _local_dir() -> str:
-    """exe'nin (paketliyse) ya da kaynak dosyalarin bulundugu klasor."""
+    """exe'nin (paketliyse) ya da proje kokunun bulundugu klasor."""
     if getattr(sys, "frozen", False):
         return os.path.dirname(os.path.abspath(sys.executable))
-    return os.path.dirname(os.path.abspath(__file__))
+    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def _appdata_base() -> str:
+    """Isletim sistemine uygun kalici ayar klasoru."""
+    if sys.platform == "win32":
+        return os.environ.get("APPDATA") or os.path.expanduser("~")
+    if sys.platform == "darwin":
+        return os.path.join(os.path.expanduser("~"), "Library", "Application Support")
+    return os.environ.get("XDG_CONFIG_HOME") or os.path.join(
+        os.path.expanduser("~"), ".config"
+    )
+
+
+def _data_base() -> str:
+    """Buyuk dosyalar (indirilen modeller) icin veri klasoru."""
+    if sys.platform == "win32":
+        return os.environ.get("APPDATA") or os.path.expanduser("~")
+    if sys.platform == "darwin":
+        return os.path.join(os.path.expanduser("~"), "Library", "Application Support")
+    return os.environ.get("XDG_DATA_HOME") or os.path.join(
+        os.path.expanduser("~"), ".local", "share"
+    )
+
+
+def data_dir(*parts: str) -> str:
+    """Uygulamanin veri klasoru (modeller burada tutulur)."""
+    return os.path.join(_data_base(), APP_DIR_NAME, *parts)
 
 
 def _appdata_path() -> str:
-    base = os.environ.get("APPDATA") or os.path.expanduser("~")
-    return os.path.join(base, APP_DIR_NAME, FILE_NAME)
+    return os.path.join(_appdata_base(), APP_DIR_NAME, FILE_NAME)
 
 
 def _resolve_path() -> str:

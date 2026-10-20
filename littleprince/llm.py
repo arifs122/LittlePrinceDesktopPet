@@ -54,8 +54,9 @@ _local_key = None
 
 
 def models_dir() -> str:
-    base = os.environ.get("APPDATA") or os.path.expanduser("~")
-    return os.path.join(base, "LittlePrince", "models")
+    from . import config
+
+    return config.data_dir("models")
 
 
 def _model_path_for(key: str) -> str:

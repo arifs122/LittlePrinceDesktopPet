@@ -8,8 +8,8 @@ from PySide6.QtCore import QRect, Qt, QTimer
 from PySide6.QtGui import QColor, QGuiApplication, QPainter
 from PySide6.QtWidgets import QApplication, QWidget
 
-import pet as pet_mod
-import win32_windows as w
+from littleprince import pet as pet_mod
+from littleprince import platforms as w
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shot_topmost.png")
 

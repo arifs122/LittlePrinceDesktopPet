@@ -18,13 +18,13 @@ from PySide6.QtGui import (
 )
 from PySide6.QtWidgets import QApplication, QMenu, QWidget
 
-import companion as companion_mod
-import config
-import features
-import i18n
-import prince
-import win32_windows
-from ui_font import make_font
+from . import companion as companion_mod
+from . import config
+from . import features
+from . import i18n
+from . import prince
+from . import platforms as platform_api
+from .ui_font import make_font
 
 # ---------------------------------------------------------------------------
 # Sabitler
@@ -202,7 +202,7 @@ class PetWindow(QWidget):
     # DPI / koordinat donusumu
     # ------------------------------------------------------------------
     def _update_scaling(self):
-        vx, vy, vw, vh = win32_windows.virtual_screen_rect()
+        vx, vy, vw, vh = platform_api.virtual_screen_rect()
         screens = QGuiApplication.screens()
         qx = min(s.geometry().left() for s in screens)
         qy = min(s.geometry().top() for s in screens)
@@ -261,9 +261,9 @@ class PetWindow(QWidget):
             return
         try:
             hwnd = int(self.winId())
-            if win32_windows.z_order_index(hwnd) == 0:
+            if platform_api.z_order_index(hwnd) == 0:
                 return
-            win32_windows.set_topmost(hwnd, True)
+            platform_api.set_topmost(hwnd, True)
         except Exception:
             pass
 
@@ -273,7 +273,7 @@ class PetWindow(QWidget):
     def refresh_platforms(self):
         plats: list[dict] = []
         try:
-            for win in win32_windows.list_windows(int(self.winId())):
+            for win in platform_api.list_windows(int(self.winId())):
                 lx1, lx2 = self._lx(win["left"]), self._lx(win["right"])
                 ly = self._ly(win["top"])
                 if any(
@@ -402,7 +402,7 @@ class PetWindow(QWidget):
         self._assert_topmost()
 
     def open_settings(self):
-        from settings_dialog import SettingsDialog
+        from .settings_dialog import SettingsDialog
 
         if self._settings is None:
             self._settings = SettingsDialog(self)
@@ -532,7 +532,7 @@ class PetWindow(QWidget):
     def open_chat(self):
         if not features.ai_enabled():
             return
-        from chat import ChatWindow
+        from .chat import ChatWindow
 
         self._touch()
         if self.state == "sleep":

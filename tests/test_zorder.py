@@ -8,7 +8,7 @@ from PySide6.QtCore import QRect, Qt, QTimer
 from PySide6.QtGui import QColor, QFont, QGuiApplication, QPainter
 from PySide6.QtWidgets import QApplication, QWidget
 
-import pet as pet_mod
+from littleprince import pet as pet_mod
 
 
 class DarkBox(QWidget):
@@ -88,7 +88,7 @@ def main():
     QTimer.singleShot(2600, grab)
 
     def check():
-        import win32_windows as w
+        from littleprince import platforms as w
 
         print("pet hwnd:", int(p.winId()), "topmost mi?:", w.is_topmost(int(p.winId())))
         print("kutu hwnd:", int(box.winId()), "topmost mi?:", w.is_topmost(int(box.winId())))

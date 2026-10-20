@@ -1,4 +1,4 @@
-# Windows'ta llama.cpp icin hazir tekerlek (derleme gerektirmez)
+# Windows: hazir CPU tekerlegi. Linux: kaynaktan derlenir (cmake / g++ / make).
 --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
 
 # Arayuz

@@ -1,27 +1,30 @@
 # Little Prince — Desktop Companion
 
-A tiny Little Prince who lives on your Windows desktop: he walks along window
+A tiny Little Prince who lives on your desktop: he walks along window
 edges, sits down and dangles his legs, climbs and teleports between surfaces,
 falls asleep when you leave him alone, and can **talk to you** with a built-in
 small language model.
 
+Runs on **Windows** and **Linux (X11)**.
+
 Two editions are shipped:
 
-| Edition | File | Size | What's inside |
+| Edition | Windows | Linux | What's inside |
 | --- | --- | --- | --- |
-| **Classic** | `LittlePrince.exe` | ~43 MB | Everything except AI |
-| **AI** | `LittlePrinceAI.exe` | ~60 MB | Classic + built-in model, Ollama & API support |
+| **Classic** | `LittlePrince.exe` | `LittlePrince` | Everything except AI |
+| **AI** | `LittlePrinceAI.exe` | `LittlePrinceAI` | Classic + built-in model, Ollama & API support |
 
 | Character | Companions |
 | --- | --- |
-| ![](tools/preview.png) | ![](tools/preview_companions.png) |
+| ![](docs/preview.png) | ![](docs/preview_companions.png) |
 
 ## Features
 
 - **Lives on your desktop** — a transparent, frameless, always-on-top window that
   never takes focus and never shows up in the taskbar.
-- **Walks on real windows** — reads live window rectangles via Win32 and treats
-  their top edges as platforms. He climbs, falls, lands and sits on them.
+- **Walks on real windows** — reads live window rectangles via Win32 on Windows
+  and X11/EWMH on Linux, and treats their top edges as platforms. He climbs,
+  falls, lands and sits on them.
 - **Sits & dangles** — sits on the edge with his legs hanging over it, minimum
   10 seconds so he doesn't get up instantly.
 - **Teleports** — if there is another surface nearby, he occasionally vanishes in
@@ -43,17 +46,43 @@ Two editions are shipped:
 
 ## Download & run
 
-Grab the `.exe` from [Releases](../../releases) (or build it yourself, see below)
-and double-click it. No Python, no installation.
+Grab the build for your platform from [Releases](../../releases) (or build it
+yourself, see below). No Python and no installation required.
 
-- Settings are stored in `%APPDATA%\LittlePrince\settings.json`, so the app keeps
-  them wherever you move the `.exe` (**never contains anything harmful, but can
+**Windows** — `LittlePrince.exe` / `LittlePrinceAI.exe`: double-click.
+
+**Linux** — `LittlePrince-linux-x86_64.tar.gz` (classic) or
+`LittlePrinceAI-linux-x86_64.tar.gz` (AI):
+
+```bash
+tar -xzf LittlePrinceAI-linux-x86_64.tar.gz
+cd LittlePrinceAI-linux-x86_64
+./LittlePrinceAI          # run directly
+./install.sh              # optional: add to ~/.local/bin and the app menu
+```
+
+- Settings are stored in `%APPDATA%\LittlePrince\settings.json` on Windows and
+  `~/.config/LittlePrince/settings.json` on Linux, so the app keeps them
+  wherever you move the binary (**never contains anything harmful, but can
   contain your API key** — it is not in the repository).
-- Portable mode: put an empty `settings.json` next to the `.exe` and settings
+- Portable mode: put an empty `settings.json` next to the binary and settings
   will live there instead.
 - Start with Windows: press `Win+R`, type `shell:startup`, and drop a shortcut
   to the `.exe` in that folder.
 - Quit: right-click the Prince → **Quit**.
+
+### Linux notes
+
+- **X11 is recommended.** Window geometry is read through X11/EWMH, which is
+  what lets the Prince walk on top of your open windows.
+- **Wayland:** for security reasons Wayland does not expose other applications'
+  windows. The Prince still runs, but he can only walk along the screen edges.
+- A compositor is required for the transparent background (KDE, GNOME, XFCE
+  with compositing, Cinnamon, ...).
+- If Qt fails to start with an `xcb` plugin error, install `libxcb-cursor0`
+  (Debian/Ubuntu: `sudo apt install libxcb-cursor0`).
+- The release binaries were built on Ubuntu 24.04 (glibc 2.39), so they run on
+  Ubuntu 24.04+, Fedora 40+, Arch and similar distributions.
 
 ## Controls
 
@@ -80,7 +109,7 @@ for a quote.
 Polski, Русский, Українська, 中文, 日本語, 한국어, हिन्दी, বাংলা, العربية, فارسی,
 Bahasa Indonesia, Tiếng Việt`
 
-- Default is **Automatic** (your Windows language).
+- Default is **Automatic** (your system language).
 - Font fallback is handled per script (CJK, Devanagari, Bengali, Arabic, Persian
   and so on), so no boxes appear instead of letters.
 - The **interface** (settings and chat) is in English; only the character's
@@ -104,7 +133,8 @@ Three providers (Settings → AI):
 ### Built-in model
 
 The engine (llama.cpp) is bundled, the **model file is downloaded once** into
-`%APPDATA%\LittlePrince\models\` so the `.exe` stays small:
+`%APPDATA%\LittlePrince\models\` on Windows or
+`~/.local/share/LittlePrince/models/` on Linux, so the binary stays small:
 
 - **Qwen2.5 0.5B** — ~470 MB, small and fast
 - **Qwen2.5 1.5B** — ~1 GB, noticeably better Turkish and other languages
@@ -147,27 +177,51 @@ CPU, so it works on any machine — no GPU required.
   (feet, or hips when sitting/sleeping) is aligned to the platform's edge.
 - **Windows:** `EnumWindows` + `DwmGetWindowAttribute` give the real frame
   rectangles of open windows; their top edges become platforms.
-- **Always on top:** the taskbar also lives in the topmost band, so the window
-  silently re-asserts `SetWindowPos(HWND_TOPMOST)` a few times per second — but
-  only when something is actually above it.
+- **Linux:** X11/EWMH (`_NET_CLIENT_LIST`, `_NET_WM_WINDOW_TYPE`,
+  `_NET_WM_DESKTOP`) is read through a small ctypes layer; the window manager's
+  frame geometry is used, and panels/desktops/menus are ignored.
+- **Always on top:** on Windows the taskbar also lives in the topmost band, so
+  the window silently re-asserts `SetWindowPos(HWND_TOPMOST)` a few times per
+  second — but only when something is actually above it. On X11 the same check
+  uses `_NET_WM_STATE_ABOVE` plus `XRaiseWindow`.
 - **DPI:** Win32 physical coordinates are converted to Qt logical coordinates,
-  so alignment stays correct at 125 % / 150 % scaling.
+  so alignment stays correct at 125 % / 150 % scaling. X11 reports physical
+  pixels and the same conversion is applied.
 
 ## Building from source
 
+Windows:
+
 ```powershell
 python -m pip install -r requirements-dev.txt
-python tools\make_icon.py      # generates app.ico
-build.bat                      # -> dist\LittlePrince.exe + dist\LittlePrinceAI.exe
+python scripts\make_icon.py     # generates assets\app.ico + app.png
+scripts\build.bat               # -> dist\LittlePrince.exe + dist\LittlePrinceAI.exe
 ```
 
-Or just one edition: `build.bat classic` / `build.bat ai`
-(equivalently `python build.py classic` / `python build.py ai`).
+Linux:
+
+```bash
+python3 -m venv .venv && . .venv/bin/activate
+pip install -r requirements-dev.txt
+python scripts/make_icon.py
+scripts/build.sh                # -> dist/LittlePrince + dist/LittlePrinceAI (+ .tar.gz)
+```
+
+`llama-cpp-python` is compiled from source on Linux, so `cmake`, `g++` and
+`make` are needed for the AI edition. The chat still works with Ollama/API if
+you skip it.
+
+Or just one edition: `scripts\build.bat classic` / `scripts\build.bat ai`
+(`scripts/build.sh classic` / `scripts/build.sh ai` on Linux).
 
 Smoke test without opening the UI:
 
 ```powershell
 $env:LP_SELFTEST="1"; dist\LittlePrinceAI.exe; Get-Content "$env:TEMP\lp_selftest.txt"
+```
+
+```bash
+LP_SELFTEST=1 dist/LittlePrinceAI; cat /tmp/lp_selftest.txt
 ```
 
 Run from source:
@@ -177,25 +231,38 @@ python -m pip install -r requirements.txt
 python main.py
 ```
 
+Use `LP_NO_AI=1 python main.py` to try the classic behaviour from source.
+
 ## Project layout
 
 ```
-main.py                 entry point (+ self test)
-pet.py                  window, physics, sleep, teleport, reactions, menu
-prince.py               Little Prince vector art
-companion.py            fox / rose / lamplighter / snake / baobab art + windows
-i18n.py                 20-language strings (quotes + menu)
-features.py             AI on/off detection for the two editions
-ui_font.py              font stack for CJK / Indic / Arabic scripts
-llm.py                  AI backends (built-in llama.cpp, Ollama, OpenAI-compatible)
-chat.py                 chat window + model downloader
-config.py               settings load/save
-settings_dialog.py      settings UI
-win32_windows.py        Win32 helpers (window rects, z-order, topmost)
-build.bat               builds both editions (classic / ai for a single one)
-build.py                PyInstaller command builder used by build.bat
-LICENSE                 MIT for the code (story/character rights excluded)
-tools/                  art previews, icon generator, diagnostics, tests
+main.py                     entry point (+ self test)
+littleprince/
+  pet.py                    window, physics, sleep, teleport, reactions, menu
+  prince.py                 Little Prince vector art
+  companion.py              fox / rose / lamplighter / snake / baobab art + windows
+  i18n.py                   20-language strings (quotes + menu)
+  features.py               AI on/off detection for the two editions
+  ui_font.py                font stack for CJK / Indic / Arabic scripts
+  llm.py                    AI backends (built-in llama.cpp, Ollama, OpenAI-compatible)
+  chat.py                   chat window + model downloader
+  config.py                 settings load/save (Windows / Linux / macOS paths)
+  settings_dialog.py        settings UI
+  platforms/
+    __init__.py             backend selection
+    win32.py                Win32 helpers (window rects, z-order, topmost)
+    x11.py                  X11 / EWMH helpers for Linux
+    fallback.py             screen edges only (Wayland and other platforms)
+assets/                     app.ico, app.png, ai_enabled.flag
+scripts/
+  build.py                  PyInstaller command builder (both platforms)
+  build.bat / build.sh      Windows / Linux wrappers
+  make_icon.py              generates the icons from the vector art
+tests/                      behaviour and screenshot tests
+tools/                      art previews, diagnostics, screenshots
+docs/                       README preview images
+packaging/                  Linux install script and Linux readme
+LICENSE                     MIT for the code (story/character rights excluded)
 ```
 
 ## Credits

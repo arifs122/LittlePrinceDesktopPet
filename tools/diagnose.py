@@ -6,11 +6,11 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from PySide6.QtWidgets import QApplication
 
-import win32_windows as w
+from littleprince import platforms as w
 
 app = QApplication(sys.argv)
 
-print("virtual (GetSystemMetrics):", w.virtual_screen_rect())
+print("virtual screen:", w.virtual_screen_rect())
 for s in app.screens():
     print(
         f"  ekran {s.name()!r} dpr={s.devicePixelRatio()} "

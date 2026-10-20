@@ -8,7 +8,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QFont, QPainter, QPen, QPixmap
 from PySide6.QtWidgets import QApplication
 
-import prince
+from littleprince import prince
 
 SCALE = 2.0
 STATES = ["idle", "walk", "sit", "fall", "drag"]
@@ -53,7 +53,11 @@ def main():
         y += LABEL
 
     p.end()
-    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "preview.png")
+    out = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        "docs",
+        "preview.png",
+    )
     sheet.save(out)
     print("Kaydedildi:", out)
     return 0

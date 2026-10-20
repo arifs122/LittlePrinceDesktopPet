@@ -8,7 +8,7 @@ from PySide6.QtCore import QRect, QTimer
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtWidgets import QApplication
 
-import pet as pet_mod
+from littleprince import pet as pet_mod
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shot_sit.png")
 

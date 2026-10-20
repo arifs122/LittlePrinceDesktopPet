@@ -15,9 +15,9 @@ import tempfile
 from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QApplication
 
-import config
-from pet import PetWindow
-from ui_font import apply_app_font
+from littleprince import config
+from littleprince.pet import PetWindow
+from littleprince.ui_font import apply_app_font
 
 
 def _selftest() -> int:
@@ -37,17 +37,18 @@ def _selftest() -> int:
     except Exception as exc:
         add(f"Qt: HATA {exc!r}", True)
 
-    import features
+    from littleprince import features
 
     ai = features.ai_enabled()
     add(f"Surum: {'AI' if ai else 'AI-siz (classic)'}")
 
     try:
-        import companion  # noqa: F401
-        import prince  # noqa: F401
-        import win32_windows  # noqa: F401
+        from littleprince import companion  # noqa: F401
+        from littleprince import prince  # noqa: F401
+        from littleprince import platforms  # noqa: F401
 
         add("Moduller: OK")
+        add(f"Platform: {platforms.NAME}")
         add(f"Ayar dosyasi: {config.path()}")
         cfg = config.load()
         add(f"Ayar yuklendi: dil={cfg['language']} olcek={cfg['scale']}")
@@ -58,7 +59,7 @@ def _selftest() -> int:
         add("Yapay zeka: bu surumde yok (beklenen)")
     else:
         try:
-            import llm
+            from littleprince import llm
 
             ready = llm.local_model_ready(config.load())
             add(f"Yerlesik model hazir mi: {ready}")

@@ -41,11 +41,18 @@ models/
 
 # ---------------------------------------------------------------------------
 # Ekran goruntuleri ve test ciktilari (kisisel masaustu goruntusu icerebilir)
-# NOT: tools/preview*.png belgelerde kullanildigi icin DAHIL EDILIR.
+# NOT: docs/preview*.png belgelerde kullanildigi icin DAHIL EDILIR.
 # ---------------------------------------------------------------------------
 tools/screenshot.png
 tools/shot_*.png
 tools/icon_preview.png
+tests/screenshot.png
+tests/shot_*.png
+
+# ---------------------------------------------------------------------------
+# Linux paketleri (release'e GitHub uzerinden yuklenir)
+# ---------------------------------------------------------------------------
+*.tar.gz
 
 # ---------------------------------------------------------------------------
 # Isletim sistemi / editor

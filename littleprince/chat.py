@@ -18,7 +18,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-import llm
+from . import llm
 
 MAX_HISTORY = 12
 

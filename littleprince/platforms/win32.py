@@ -4,6 +4,8 @@ Harici kutuphane gerektirmez; sadece user32/dwmapi kullanir.
 """
 from __future__ import annotations
 
+NAME = "windows"
+
 import ctypes
 from ctypes import wintypes
 

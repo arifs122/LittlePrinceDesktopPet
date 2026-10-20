@@ -24,7 +24,7 @@ from PySide6.QtGui import (
 )
 from PySide6.QtWidgets import QWidget
 
-import win32_windows
+from . import platforms as platform_api
 
 # ---------------------------------------------------------------------------
 # Tur tanimlari: (genislik, yukseklik, gelis sekli)
@@ -651,7 +651,7 @@ class Companion(QWidget):
         self.anim += 1
         if self.frame % 15 == 0:
             try:
-                win32_windows.set_topmost(int(self.winId()), True)
+                platform_api.set_topmost(int(self.winId()), True)
             except Exception:
                 pass
         pos = (int(round(self.x)), int(round(self.y)))

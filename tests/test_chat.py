@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QApplication
 
-from chat import ChatWindow
+from littleprince.chat import ChatWindow
 
 
 class BubbleStub:
